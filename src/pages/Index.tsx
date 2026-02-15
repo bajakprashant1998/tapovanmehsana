@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection, Counter } from "@/components/AnimatedSection";
 import {
   GraduationCap, Shield, BookOpen, Users, Building2, Bus, Microscope,
-  Monitor, Trophy, ChevronRight, Star, Calendar, ArrowRight
+  Monitor, Trophy, ChevronRight, Star, Calendar, ArrowRight, Sparkles
 } from "lucide-react";
 import heroBg from "@/assets/hero-campus.jpg";
 
@@ -13,24 +12,6 @@ const highlights = [
   { end: 3000, suffix: "+", label: "Students" },
   { end: 15, suffix: "", label: "Acre Campus" },
   { end: 100, suffix: "%", label: "CBSE Results" },
-];
-
-const whyChooseUs = [
-  { icon: BookOpen, title: "Holistic Education", desc: "Balanced curriculum nurturing academics, arts, sports, and life skills." },
-  { icon: Monitor, title: "Modern Infrastructure", desc: "Smart classrooms, advanced labs, and digital learning resources." },
-  { icon: Shield, title: "Safety & Security", desc: "24/7 CCTV surveillance, trained staff, and secure campus environment." },
-  { icon: Users, title: "Expert Faculty", desc: "Qualified and experienced educators dedicated to student success." },
-  { icon: Building2, title: "Residential Life", desc: "Home-like hostel with nutritious meals, supervision, and care." },
-  { icon: Bus, title: "Transport Fleet", desc: "GPS-tracked buses covering major routes on the highway corridor." },
-];
-
-const facilities = [
-  { icon: Monitor, label: "Smart Classrooms" },
-  { icon: Microscope, label: "Science Labs" },
-  { icon: Trophy, label: "Sports Complex" },
-  { icon: Building2, label: "Hostel" },
-  { icon: BookOpen, label: "Library" },
-  { icon: Bus, label: "Transport" },
 ];
 
 const testimonials = [
@@ -62,7 +43,7 @@ const Index = () => {
             </span>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[0.95] mb-6 tracking-tight">
               Shaping Tomorrow's{" "}
               <span className="text-primary">Leaders</span>{" "}
               Today
@@ -102,34 +83,124 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Bento Grid — Why Choose Us + Facilities */}
       <section className="section-padding bg-background">
         <div className="container-custom">
           <AnimatedSection>
-            <div className="text-center mb-12">
-              <span className="text-primary text-sm font-semibold uppercase tracking-wider">Why Tapovan</span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mt-2 text-foreground">
-                Why Choose Tapovan International?
+            <div className="text-center mb-14">
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">Why Tapovan</span>
+              <h2 className="font-display text-4xl md:text-5xl font-extrabold mt-3 text-foreground tracking-tight">
+                Everything Your Child Needs
               </h2>
-              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                We provide a nurturing environment where every child discovers their potential through academic excellence and holistic development.
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
+                A nurturing environment where every child discovers their potential through academic excellence and holistic development.
               </p>
             </div>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyChooseUs.map((item, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-primary/30 h-full">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <item.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <h3 className="font-display text-xl font-semibold mb-2 text-foreground">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
+
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[180px]">
+            {/* Large card — Holistic Education */}
+            <AnimatedSection delay={0} className="md:col-span-2 md:row-span-2">
+              <div className="h-full rounded-2xl bg-gradient-primary p-8 flex flex-col justify-between text-primary-foreground group hover:shadow-2xl transition-shadow">
+                <div>
+                  <BookOpen className="h-10 w-10 mb-4 opacity-90" />
+                  <h3 className="font-display text-2xl md:text-3xl font-extrabold mb-2">Holistic Education</h3>
+                  <p className="text-primary-foreground/80 text-sm md:text-base leading-relaxed max-w-md">
+                    Balanced curriculum nurturing academics, arts, sports, and essential life skills for a complete education experience.
+                  </p>
+                </div>
+                <Link to="/academics" className="inline-flex items-center gap-1 text-sm font-semibold mt-4 hover:gap-2 transition-all">
+                  Learn more <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </AnimatedSection>
+
+            {/* Modern Infrastructure */}
+            <AnimatedSection delay={0.1}>
+              <div className="h-full rounded-2xl bg-secondary p-6 flex flex-col justify-between text-secondary-foreground group hover:shadow-xl transition-shadow">
+                <Monitor className="h-8 w-8 text-primary" />
+                <div>
+                  <h3 className="font-display text-lg font-bold">Smart Classrooms</h3>
+                  <p className="text-secondary-foreground/60 text-xs mt-1">Interactive tech-enabled learning</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Safety */}
+            <AnimatedSection delay={0.15}>
+              <div className="h-full rounded-2xl bg-muted p-6 flex flex-col justify-between group hover:shadow-xl transition-shadow border border-border">
+                <Shield className="h-8 w-8 text-primary" />
+                <div>
+                  <h3 className="font-display text-lg font-bold text-foreground">Safety & Security</h3>
+                  <p className="text-muted-foreground text-xs mt-1">24/7 CCTV, trained staff</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Expert Faculty */}
+            <AnimatedSection delay={0.2}>
+              <div className="h-full rounded-2xl bg-muted p-6 flex flex-col justify-between group hover:shadow-xl transition-shadow border border-border">
+                <Users className="h-8 w-8 text-accent" />
+                <div>
+                  <h3 className="font-display text-lg font-bold text-foreground">Expert Faculty</h3>
+                  <p className="text-muted-foreground text-xs mt-1">Qualified & experienced educators</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Residential */}
+            <AnimatedSection delay={0.25}>
+              <div className="h-full rounded-2xl bg-accent/15 p-6 flex flex-col justify-between group hover:shadow-xl transition-shadow border border-accent/20">
+                <Building2 className="h-8 w-8 text-accent" />
+                <div>
+                  <h3 className="font-display text-lg font-bold text-foreground">Residential Life</h3>
+                  <p className="text-muted-foreground text-xs mt-1">Home-like hostel with care</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Wide card — Sports & Labs */}
+            <AnimatedSection delay={0.3} className="md:col-span-2">
+              <div className="h-full rounded-2xl bg-gradient-navy p-6 flex items-center gap-6 text-secondary-foreground group hover:shadow-xl transition-shadow">
+                <div className="flex gap-4 shrink-0">
+                  <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
+                    <Microscope className="h-7 w-7 text-primary" />
+                  </div>
+                  <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
+                    <Trophy className="h-7 w-7 text-primary" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-display text-xl font-bold">Labs & Sports Complex</h3>
+                  <p className="text-secondary-foreground/60 text-sm mt-1">Advanced labs, cricket ground, athletics track, indoor games, and more.</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* Transport */}
+            <AnimatedSection delay={0.35}>
+              <div className="h-full rounded-2xl bg-primary/10 p-6 flex flex-col justify-between group hover:shadow-xl transition-shadow border border-primary/15">
+                <Bus className="h-8 w-8 text-primary" />
+                <div>
+                  <h3 className="font-display text-lg font-bold text-foreground">Transport Fleet</h3>
+                  <p className="text-muted-foreground text-xs mt-1">GPS-tracked buses on highway</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* CTA card */}
+            <AnimatedSection delay={0.4}>
+              <Link to="/facilities" className="block h-full">
+                <div className="h-full rounded-2xl bg-primary p-6 flex flex-col justify-between text-primary-foreground group hover:bg-saffron-dark transition-colors cursor-pointer">
+                  <Sparkles className="h-8 w-8" />
+                  <div>
+                    <h3 className="font-display text-lg font-bold">View All Facilities</h3>
+                    <ArrowRight className="h-5 w-5 mt-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -139,69 +210,36 @@ const Index = () => {
         <div className="container-custom">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <span className="text-primary text-sm font-semibold uppercase tracking-wider">Academics</span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mt-2 text-foreground">
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">Academics</span>
+              <h2 className="font-display text-4xl md:text-5xl font-extrabold mt-3 text-foreground tracking-tight">
                 Comprehensive CBSE Curriculum
               </h2>
             </div>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { level: "Pre-Primary", grades: "Nursery – KG", color: "bg-primary" },
-              { level: "Primary", grades: "Classes I – V", color: "bg-accent" },
-              { level: "Secondary", grades: "Classes VI – X", color: "bg-secondary" },
-              { level: "Senior Secondary", grades: "Classes XI – XII", color: "bg-navy" },
+              { level: "Pre-Primary", grades: "Nursery – KG", color: "from-primary to-saffron-light" },
+              { level: "Primary", grades: "Classes I – V", color: "from-accent to-gold-light" },
+              { level: "Secondary", grades: "Classes VI – X", color: "from-secondary to-navy-light" },
+              { level: "Sr. Secondary", grades: "Classes XI – XII", color: "from-navy-dark to-secondary" },
             ].map((item, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
-                  <div className={`h-2 ${item.color}`} />
-                  <CardContent className="p-6 text-center">
-                    <GraduationCap className="h-10 w-10 text-primary mx-auto mb-3" />
-                    <h3 className="font-display text-xl font-semibold text-foreground">{item.level}</h3>
+                <div className="relative overflow-hidden rounded-2xl bg-card border border-border hover:shadow-xl transition-all group h-full">
+                  <div className={`h-1.5 bg-gradient-to-r ${item.color}`} />
+                  <div className="p-6 text-center">
+                    <GraduationCap className="h-10 w-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                    <h3 className="font-display text-xl font-bold text-foreground">{item.level}</h3>
                     <p className="text-muted-foreground text-sm mt-1">{item.grades}</p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
-          </div>
-          <AnimatedSection delay={0.3}>
-            <div className="text-center mt-8">
-              <Link to="/academics">
-                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  View Full Curriculum <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Facilities Preview */}
-      <section className="section-padding bg-background">
-        <div className="container-custom">
-          <AnimatedSection>
-            <div className="text-center mb-12">
-              <span className="text-primary text-sm font-semibold uppercase tracking-wider">Campus</span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mt-2 text-foreground">
-                World-Class Facilities
-              </h2>
-            </div>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {facilities.map((f, i) => (
-              <AnimatedSection key={i} delay={i * 0.08}>
-                <div className="bg-muted rounded-xl p-6 text-center hover:bg-primary/10 hover:shadow-md transition-all group cursor-pointer">
-                  <f.icon className="h-8 w-8 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                  <p className="text-sm font-medium text-foreground">{f.label}</p>
+                  </div>
                 </div>
               </AnimatedSection>
             ))}
           </div>
-          <AnimatedSection delay={0.4}>
-            <div className="text-center mt-8">
-              <Link to="/facilities">
-                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  Explore Facilities <ChevronRight className="ml-1 h-4 w-4" />
+          <AnimatedSection delay={0.3}>
+            <div className="text-center mt-10">
+              <Link to="/academics">
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold">
+                  View Full Curriculum <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -214,8 +252,8 @@ const Index = () => {
         <div className="container-custom">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <span className="text-primary text-sm font-semibold uppercase tracking-wider">Testimonials</span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mt-2">
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">Testimonials</span>
+              <h2 className="font-display text-4xl md:text-5xl font-extrabold mt-3 tracking-tight">
                 What Parents Say
               </h2>
             </div>
@@ -223,17 +261,17 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <div className="bg-secondary-foreground/5 rounded-xl p-6 border border-secondary-foreground/10">
+                <div className="bg-secondary-foreground/5 rounded-2xl p-7 border border-secondary-foreground/10 hover:border-primary/30 transition-colors h-full flex flex-col">
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, j) => (
                       <Star key={j} className="h-4 w-4 fill-primary text-primary" />
                     ))}
                   </div>
-                  <p className="text-secondary-foreground/80 text-sm leading-relaxed mb-4 italic">
+                  <p className="text-secondary-foreground/80 text-sm leading-relaxed mb-auto italic flex-1">
                     "{t.text}"
                   </p>
-                  <div>
-                    <p className="font-semibold text-sm">{t.name}</p>
+                  <div className="mt-5 pt-4 border-t border-secondary-foreground/10">
+                    <p className="font-bold text-sm">{t.name}</p>
                     <p className="text-xs text-secondary-foreground/60">{t.role}</p>
                   </div>
                 </div>
@@ -248,8 +286,8 @@ const Index = () => {
         <div className="container-custom">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <span className="text-primary text-sm font-semibold uppercase tracking-wider">Updates</span>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mt-2 text-foreground">
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">Updates</span>
+              <h2 className="font-display text-4xl md:text-5xl font-extrabold mt-3 text-foreground tracking-tight">
                 News & Events
               </h2>
             </div>
@@ -257,16 +295,14 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {news.map((n, i) => (
               <AnimatedSection key={i} delay={i * 0.1}>
-                <Card className="hover:shadow-lg transition-shadow h-full">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Calendar className="h-4 w-4 text-primary" />
-                      <span className="text-xs text-muted-foreground">{n.date}</span>
-                    </div>
-                    <h3 className="font-display text-lg font-semibold text-foreground mb-2">{n.title}</h3>
-                    <p className="text-sm text-muted-foreground">{n.desc}</p>
-                  </CardContent>
-                </Card>
+                <div className="rounded-2xl border border-border bg-card p-6 hover:shadow-xl transition-shadow h-full">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Calendar className="h-4 w-4 text-primary" />
+                    <span className="text-xs text-muted-foreground font-medium">{n.date}</span>
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-2">{n.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{n.desc}</p>
+                </div>
               </AnimatedSection>
             ))}
           </div>
@@ -277,7 +313,7 @@ const Index = () => {
       <section className="section-padding bg-gradient-primary text-primary-foreground">
         <div className="container-custom text-center">
           <AnimatedSection>
-            <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
+            <h2 className="font-display text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
               Begin Your Child's Journey Today
             </h2>
             <p className="text-primary-foreground/80 text-lg max-w-xl mx-auto mb-8">

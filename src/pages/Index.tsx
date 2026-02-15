@@ -3,27 +3,28 @@ import { Button } from "@/components/ui/button";
 import { AnimatedSection, Counter } from "@/components/AnimatedSection";
 import {
   GraduationCap, Shield, BookOpen, Users, Building2, Bus, Microscope,
-  Monitor, Trophy, ChevronRight, Star, Calendar, ArrowRight, Sparkles } from
-"lucide-react";
+  Monitor, Trophy, ChevronRight, Star, Calendar, ArrowRight, Sparkles
+} from
+  "lucide-react";
 import heroBg from "@/assets/hero-campus.jpg";
 
 const highlights = [
-{ end: 25, suffix: "+", label: "Years of Excellence" },
-{ end: 3000, suffix: "+", label: "Students" },
-{ end: 15, suffix: "", label: "Acre Campus" },
-{ end: 100, suffix: "%", label: "CBSE Results" }];
+  { end: 25, suffix: "+", label: "Years of Excellence" },
+  { end: 3000, suffix: "+", label: "Students" },
+  { end: 15, suffix: "", label: "Acre Campus" },
+  { end: 100, suffix: "%", label: "CBSE Results" }];
 
 
 const testimonials = [
-{ name: "Rajesh Patel", role: "Parent", text: "Tapovan has transformed our child's confidence. The teachers are incredibly supportive and the campus is world-class." },
-{ name: "Anita Sharma", role: "Parent", text: "We're so grateful for the holistic education our daughter receives. The residential facility is like a second home." },
-{ name: "Dr. Mehta", role: "Parent", text: "The CBSE results speak for themselves. Academic rigor combined with extracurricular excellence — that's Tapovan." }];
+  { name: "Rajesh Patel", role: "Parent", text: "Tapovan has transformed our child's confidence. The teachers are incredibly supportive and the campus is world-class." },
+  { name: "Anita Sharma", role: "Parent", text: "We're so grateful for the holistic education our daughter receives. The residential facility is like a second home." },
+  { name: "Dr. Mehta", role: "Parent", text: "The CBSE results speak for themselves. Academic rigor combined with extracurricular excellence — that's Tapovan." }];
 
 
 const news = [
-{ title: "Admissions Open 2025-26", date: "January 2025", desc: "Applications are now being accepted for Pre-Primary to Class XI." },
-{ title: "Annual Sports Day", date: "December 2024", desc: "Students showcased athletic excellence in track, field, and team sports." },
-{ title: "Science Exhibition Winners", date: "November 2024", desc: "Our students won top prizes at the state-level science exhibition." }];
+  { title: "Admissions Open 2025-26", date: "January 2025", desc: "Applications are now being accepted for Pre-Primary to Class XI." },
+  { title: "Annual Sports Day", date: "December 2024", desc: "Students showcased athletic excellence in track, field, and team sports." },
+  { title: "Science Exhibition Winners", date: "November 2024", desc: "Our students won top prizes at the state-level science exhibition." }];
 
 
 const Index = () => {
@@ -51,7 +52,7 @@ const Index = () => {
           </AnimatedSection>
           <AnimatedSection delay={0.2}>
             <p className="text-lg md:text-xl text-secondary-foreground/80 max-w-2xl mx-auto mb-8">
-              A premier international school on the Ahmedabad–Mehsana Highway offering 
+              A premier international school on the Ahmedabad–Mehsana Highway offering
               world-class education, modern campus, and holistic development.
             </p>
           </AnimatedSection>
@@ -63,7 +64,7 @@ const Index = () => {
                 </Button>
               </Link>
               <Link to="/about">
-                <Button size="lg" variant="outline" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 text-base px-8 py-6">
+                <Button size="lg" variant="outline" className="bg-transparent border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 text-base px-8 py-6">
                   Explore Our School
                 </Button>
               </Link>
@@ -77,7 +78,7 @@ const Index = () => {
         <div className="container-custom">
           <div className="bg-card rounded-2xl shadow-2xl border border-border p-8 md:p-12 grid grid-cols-2 md:grid-cols-4 gap-8">
             {highlights.map((h, i) =>
-            <Counter key={i} end={h.end} suffix={h.suffix} label={h.label} />
+              <Counter key={i} end={h.end} suffix={h.suffix} label={h.label} />
             )}
           </div>
         </div>
@@ -218,22 +219,22 @@ const Index = () => {
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-            { level: "Pre-Primary", grades: "Nursery – KG", color: "from-primary to-saffron-light" },
-            { level: "Primary", grades: "Classes I – V", color: "from-accent to-gold-light" },
-            { level: "Secondary", grades: "Classes VI – X", color: "from-secondary to-navy-light" },
-            { level: "Sr. Secondary", grades: "Classes XI – XII", color: "from-navy-dark to-secondary" }].
-            map((item, i) =>
-            <AnimatedSection key={i} delay={i * 0.1}>
-                <div className="relative overflow-hidden rounded-2xl bg-card border border-border hover:shadow-xl transition-all group h-full">
-                  <div className={`h-1.5 bg-gradient-to-r ${item.color}`} />
-                  <div className="p-6 text-center">
-                    <GraduationCap className="h-10 w-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-display text-xl font-bold text-foreground">{item.level}</h3>
-                    <p className="text-muted-foreground text-sm mt-1">{item.grades}</p>
+              { level: "Pre-Primary", grades: "Nursery – KG", color: "from-primary to-saffron-light" },
+              { level: "Primary", grades: "Classes I – V", color: "from-accent to-gold-light" },
+              { level: "Secondary", grades: "Classes VI – X", color: "from-secondary to-navy-light" },
+              { level: "Sr. Secondary", grades: "Classes XI – XII", color: "from-navy-dark to-secondary" }].
+              map((item, i) =>
+                <AnimatedSection key={i} delay={i * 0.1}>
+                  <div className="relative overflow-hidden rounded-2xl bg-card border border-border hover:shadow-xl transition-all group h-full">
+                    <div className={`h-1.5 bg-gradient-to-r ${item.color}`} />
+                    <div className="p-6 text-center">
+                      <GraduationCap className="h-10 w-10 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                      <h3 className="font-display text-xl font-bold text-foreground">{item.level}</h3>
+                      <p className="text-muted-foreground text-sm mt-1">{item.grades}</p>
+                    </div>
                   </div>
-                </div>
-              </AnimatedSection>
-            )}
+                </AnimatedSection>
+              )}
           </div>
           <AnimatedSection delay={0.3}>
             <div className="text-center mt-10">
@@ -260,12 +261,12 @@ const Index = () => {
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t, i) =>
-            <AnimatedSection key={i} delay={i * 0.1}>
+              <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="bg-secondary-foreground/5 rounded-2xl p-7 border border-secondary-foreground/10 hover:border-primary/30 transition-colors h-full flex flex-col">
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, j) =>
-                  <Star key={j} className="h-4 w-4 fill-primary text-primary" />
-                  )}
+                      <Star key={j} className="h-4 w-4 fill-primary text-primary" />
+                    )}
                   </div>
                   <p className="text-secondary-foreground/80 text-sm leading-relaxed mb-auto italic flex-1">
                     "{t.text}"
@@ -294,7 +295,7 @@ const Index = () => {
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {news.map((n, i) =>
-            <AnimatedSection key={i} delay={i * 0.1}>
+              <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="rounded-2xl border border-border bg-card p-6 hover:shadow-xl transition-shadow h-full">
                   <div className="flex items-center gap-2 mb-3">
                     <Calendar className="h-4 w-4 text-primary" />
@@ -321,12 +322,12 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/admissions">
-                <Button size="lg" className="bg-secondary hover:bg-navy-dark text-secondary-foreground text-base px-8 py-6 font-semibold shadow-xl">
+                <Button size="lg" className="bg-primary hover:bg-saffron-dark text-primary-foreground text-base px-8 py-6 font-semibold shadow-xl">
                   Apply for Admission
                 </Button>
               </Link>
               <Link to="/contact">
-                <Button size="lg" variant="outline" className="border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 py-6">
+                <Button size="lg" variant="outline" className="bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8 py-6">
                   Schedule a Campus Visit
                 </Button>
               </Link>

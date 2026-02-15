@@ -34,20 +34,19 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-card/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-card/95 backdrop-blur-md shadow-lg"
+        : "bg-transparent"
+        }`}
     >
       <div className="container-custom flex items-center justify-between h-20">
         <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="Tapovan International School" className="h-14 w-auto" />
           <div className="hidden sm:block">
-            <p className={`font-display text-lg font-bold leading-tight transition-colors ${scrolled ? "text-secondary" : "text-white"}`}>
+            <p className={`font-display text-lg font-bold leading-tight transition-colors ${scrolled || location.pathname !== "/" ? "text-secondary" : "text-white"}`}>
               Tapovan International
             </p>
-            <p className={`text-xs tracking-wider uppercase transition-colors ${scrolled ? "text-muted-foreground" : "text-white/60"}`}>School</p>
+            <p className={`text-xs tracking-wider uppercase transition-colors ${scrolled || location.pathname !== "/" ? "text-muted-foreground" : "text-white/60"}`}>School</p>
           </div>
         </Link>
 
@@ -57,13 +56,12 @@ const Header = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                location.pathname === item.path
-                  ? "text-primary bg-primary/10"
-                  : scrolled
-                  ? "text-foreground hover:text-primary hover:bg-primary/5"
-                  : "text-white hover:text-primary"
-              }`}
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location.pathname === item.path
+                  ? "text-primary"
+                  : scrolled || location.pathname !== "/"
+                    ? "text-foreground hover:text-primary hover:bg-primary/5"
+                    : "text-white hover:text-primary"
+                }`}
             >
               {item.label}
             </Link>
@@ -104,11 +102,10 @@ const Header = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                    location.pathname === item.path
-                      ? "text-primary bg-primary/10"
-                      : "text-foreground hover:text-primary hover:bg-primary/5"
-                  }`}
+                  className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${location.pathname === item.path
+                    ? "text-primary"
+                    : "text-foreground hover:text-primary hover:bg-primary/5"
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -122,7 +119,7 @@ const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </header >
   );
 };
 

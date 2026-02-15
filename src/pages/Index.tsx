@@ -3,28 +3,28 @@ import { Button } from "@/components/ui/button";
 import { AnimatedSection, Counter } from "@/components/AnimatedSection";
 import {
   GraduationCap, Shield, BookOpen, Users, Building2, Bus, Microscope,
-  Monitor, Trophy, ChevronRight, Star, Calendar, ArrowRight, Sparkles
-} from "lucide-react";
+  Monitor, Trophy, ChevronRight, Star, Calendar, ArrowRight, Sparkles } from
+"lucide-react";
 import heroBg from "@/assets/hero-campus.jpg";
 
 const highlights = [
-  { end: 25, suffix: "+", label: "Years of Excellence" },
-  { end: 3000, suffix: "+", label: "Students" },
-  { end: 15, suffix: "", label: "Acre Campus" },
-  { end: 100, suffix: "%", label: "CBSE Results" },
-];
+{ end: 25, suffix: "+", label: "Years of Excellence" },
+{ end: 3000, suffix: "+", label: "Students" },
+{ end: 15, suffix: "", label: "Acre Campus" },
+{ end: 100, suffix: "%", label: "CBSE Results" }];
+
 
 const testimonials = [
-  { name: "Rajesh Patel", role: "Parent", text: "Tapovan has transformed our child's confidence. The teachers are incredibly supportive and the campus is world-class." },
-  { name: "Anita Sharma", role: "Parent", text: "We're so grateful for the holistic education our daughter receives. The residential facility is like a second home." },
-  { name: "Dr. Mehta", role: "Parent", text: "The CBSE results speak for themselves. Academic rigor combined with extracurricular excellence — that's Tapovan." },
-];
+{ name: "Rajesh Patel", role: "Parent", text: "Tapovan has transformed our child's confidence. The teachers are incredibly supportive and the campus is world-class." },
+{ name: "Anita Sharma", role: "Parent", text: "We're so grateful for the holistic education our daughter receives. The residential facility is like a second home." },
+{ name: "Dr. Mehta", role: "Parent", text: "The CBSE results speak for themselves. Academic rigor combined with extracurricular excellence — that's Tapovan." }];
+
 
 const news = [
-  { title: "Admissions Open 2025-26", date: "January 2025", desc: "Applications are now being accepted for Pre-Primary to Class XI." },
-  { title: "Annual Sports Day", date: "December 2024", desc: "Students showcased athletic excellence in track, field, and team sports." },
-  { title: "Science Exhibition Winners", date: "November 2024", desc: "Our students won top prizes at the state-level science exhibition." },
-];
+{ title: "Admissions Open 2025-26", date: "January 2025", desc: "Applications are now being accepted for Pre-Primary to Class XI." },
+{ title: "Annual Sports Day", date: "December 2024", desc: "Students showcased athletic excellence in track, field, and team sports." },
+{ title: "Science Exhibition Winners", date: "November 2024", desc: "Our students won top prizes at the state-level science exhibition." }];
+
 
 const Index = () => {
   return (
@@ -33,12 +33,12 @@ const Index = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        />
+          style={{ backgroundImage: `url(${heroBg})` }} />
+
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/80 via-secondary/60 to-secondary/90" />
         <div className="relative z-10 container-custom text-center text-secondary-foreground pt-20">
           <AnimatedSection>
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-semibold mb-6 border border-primary/30">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-sm font-semibold mb-6 border border-primary/30 text-yellow-300">
               CBSE Affiliated • Day Boarding & Residential
             </span>
           </AnimatedSection>
@@ -76,9 +76,9 @@ const Index = () => {
       <section className="section-padding bg-card relative -mt-16 z-20">
         <div className="container-custom">
           <div className="bg-card rounded-2xl shadow-2xl border border-border p-8 md:p-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-            {highlights.map((h, i) => (
-              <Counter key={i} end={h.end} suffix={h.suffix} label={h.label} />
-            ))}
+            {highlights.map((h, i) =>
+            <Counter key={i} end={h.end} suffix={h.suffix} label={h.label} />
+            )}
           </div>
         </div>
       </section>
@@ -218,12 +218,12 @@ const Index = () => {
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { level: "Pre-Primary", grades: "Nursery – KG", color: "from-primary to-saffron-light" },
-              { level: "Primary", grades: "Classes I – V", color: "from-accent to-gold-light" },
-              { level: "Secondary", grades: "Classes VI – X", color: "from-secondary to-navy-light" },
-              { level: "Sr. Secondary", grades: "Classes XI – XII", color: "from-navy-dark to-secondary" },
-            ].map((item, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
+            { level: "Pre-Primary", grades: "Nursery – KG", color: "from-primary to-saffron-light" },
+            { level: "Primary", grades: "Classes I – V", color: "from-accent to-gold-light" },
+            { level: "Secondary", grades: "Classes VI – X", color: "from-secondary to-navy-light" },
+            { level: "Sr. Secondary", grades: "Classes XI – XII", color: "from-navy-dark to-secondary" }].
+            map((item, i) =>
+            <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="relative overflow-hidden rounded-2xl bg-card border border-border hover:shadow-xl transition-all group h-full">
                   <div className={`h-1.5 bg-gradient-to-r ${item.color}`} />
                   <div className="p-6 text-center">
@@ -233,7 +233,7 @@ const Index = () => {
                   </div>
                 </div>
               </AnimatedSection>
-            ))}
+            )}
           </div>
           <AnimatedSection delay={0.3}>
             <div className="text-center mt-10">
@@ -259,13 +259,13 @@ const Index = () => {
             </div>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
+            {testimonials.map((t, i) =>
+            <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="bg-secondary-foreground/5 rounded-2xl p-7 border border-secondary-foreground/10 hover:border-primary/30 transition-colors h-full flex flex-col">
                   <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="h-4 w-4 fill-primary text-primary" />
-                    ))}
+                    {[...Array(5)].map((_, j) =>
+                  <Star key={j} className="h-4 w-4 fill-primary text-primary" />
+                  )}
                   </div>
                   <p className="text-secondary-foreground/80 text-sm leading-relaxed mb-auto italic flex-1">
                     "{t.text}"
@@ -276,7 +276,7 @@ const Index = () => {
                   </div>
                 </div>
               </AnimatedSection>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -293,8 +293,8 @@ const Index = () => {
             </div>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {news.map((n, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
+            {news.map((n, i) =>
+            <AnimatedSection key={i} delay={i * 0.1}>
                 <div className="rounded-2xl border border-border bg-card p-6 hover:shadow-xl transition-shadow h-full">
                   <div className="flex items-center gap-2 mb-3">
                     <Calendar className="h-4 w-4 text-primary" />
@@ -304,7 +304,7 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed">{n.desc}</p>
                 </div>
               </AnimatedSection>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -334,8 +334,8 @@ const Index = () => {
           </AnimatedSection>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;

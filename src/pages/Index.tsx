@@ -38,7 +38,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/80 via-secondary/60 to-secondary/90" />
         <div className="relative z-10 container-custom text-center text-secondary-foreground pt-20">
           <AnimatedSection>
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-sm font-semibold mb-6 border border-primary/30 text-yellow-300">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-sm font-semibold mb-6 border border-primary/30 text-primary-foreground">
               CBSE Affiliated • Day Boarding & Residential
             </span>
           </AnimatedSection>

@@ -44,10 +44,10 @@ const Header = () => {
         <Link to="/" className="flex items-center gap-3">
           <img src={logo} alt="Tapovan International School" className="h-14 w-auto" />
           <div className="hidden sm:block">
-            <p className="font-display text-lg font-bold text-secondary leading-tight">
+            <p className={`font-display text-lg font-bold leading-tight transition-colors ${scrolled ? "text-secondary" : "text-white"}`}>
               Tapovan International
             </p>
-            <p className="text-xs text-muted-foreground tracking-wider uppercase">School</p>
+            <p className={`text-xs tracking-wider uppercase transition-colors ${scrolled ? "text-muted-foreground" : "text-white/60"}`}>School</p>
           </div>
         </Link>
 
@@ -62,7 +62,7 @@ const Header = () => {
                   ? "text-primary bg-primary/10"
                   : scrolled
                   ? "text-foreground hover:text-primary hover:bg-primary/5"
-                  : "text-secondary hover:text-primary"
+                  : "text-white hover:text-primary"
               }`}
             >
               {item.label}

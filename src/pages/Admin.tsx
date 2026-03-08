@@ -21,6 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import logo from "@/assets/tis-logo.png";
+import TimetableManager from "@/components/admin/TimetableManager";
+
 type Tab = "overview" | "admissions" | "students" | "fees" | "announcements" | "timetable";
 
 const Admin = () => {

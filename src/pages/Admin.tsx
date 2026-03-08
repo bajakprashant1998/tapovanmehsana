@@ -470,6 +470,9 @@ const Admin = () => {
             </div>
           </div>
         )}
+
+        {/* Timetable */}
+        {tab === "timetable" && <TimetableManager />}
       </div>
     </div>
   );

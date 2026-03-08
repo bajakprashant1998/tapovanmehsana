@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Edit, Save, X, Calendar, Clock } from "lucide-react";
+import { Plus, Trash2, Edit, Save, X, Calendar, Clock, Copy, CheckSquare } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,6 +13,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const CLASSES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
@@ -52,6 +61,9 @@ const TimetableManager = () => {
   const [form, setForm] = useState<TimetableEntry>({ ...emptyEntry });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [showCopyDialog, setShowCopyDialog] = useState(false);
+  const [copyTargetDays, setCopyTargetDays] = useState<string[]>([]);
+  const [copying, setCopying] = useState(false);
 
   useEffect(() => {
     loadEntries();
@@ -145,13 +157,83 @@ const TimetableManager = () => {
     setShowForm(true);
   };
 
+  const openCopyDialog = () => {
+    setCopyTargetDays([]);
+    setShowCopyDialog(true);
+  };
+
+  const toggleCopyDay = (day: string) => {
+    setCopyTargetDays(prev =>
+      prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
+    );
+  };
+
+  const selectAllDays = () => {
+    const otherDays = DAYS.filter(d => d !== filterDay);
+    setCopyTargetDays(prev => prev.length === otherDays.length ? [] : otherDays);
+  };
+
+  const handleBulkCopy = async () => {
+    if (copyTargetDays.length === 0) {
+      toast({ title: "Select at least one target day", variant: "destructive" });
+      return;
+    }
+    if (entries.length === 0) {
+      toast({ title: "No periods to copy", variant: "destructive" });
+      return;
+    }
+
+    setCopying(true);
+    try {
+      // Delete existing entries for target days
+      for (const day of copyTargetDays) {
+        await supabase
+          .from("timetable")
+          .delete()
+          .eq("class", filterClass)
+          .eq("section", filterSection)
+          .eq("day_of_week", day);
+      }
+
+      // Build new rows
+      const newRows = copyTargetDays.flatMap(day =>
+        entries.map(entry => ({
+          class: entry.class,
+          section: entry.section,
+          day_of_week: day,
+          period_number: entry.period_number,
+          start_time: entry.start_time,
+          end_time: entry.end_time,
+          subject: entry.subject,
+          teacher_name: entry.teacher_name,
+          room: entry.room,
+        }))
+      );
+
+      const { error } = await supabase.from("timetable").insert(newRows);
+      if (error) {
+        toast({ title: "Error copying", description: error.message, variant: "destructive" });
+      } else {
+        toast({ title: `Schedule copied to ${copyTargetDays.length} day(s)!` });
+        setShowCopyDialog(false);
+      }
+    } finally {
+      setCopying(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 className="font-display text-2xl font-extrabold text-foreground">Timetable Management</h2>
-        <Button onClick={openNewForm} className="bg-primary hover:bg-primary/90 text-primary-foreground">
-          <Plus className="h-4 w-4 mr-1" /> Add Period
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={openCopyDialog} variant="outline" disabled={entries.length === 0}>
+            <Copy className="h-4 w-4 mr-1" /> Copy to Days
+          </Button>
+          <Button onClick={openNewForm} className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Plus className="h-4 w-4 mr-1" /> Add Period
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -286,6 +368,44 @@ const TimetableManager = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Bulk Copy Dialog */}
+      <Dialog open={showCopyDialog} onOpenChange={setShowCopyDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Copy className="h-5 w-5" /> Copy Schedule to Other Days
+            </DialogTitle>
+            <DialogDescription>
+              Copy all {entries.length} period(s) from <strong>{filterDay}</strong> (Class {filterClass}-{filterSection}) to the selected days. Existing periods on target days will be replaced.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm font-medium">Target Days</Label>
+              <Button variant="ghost" size="sm" onClick={selectAllDays} className="text-xs h-7">
+                <CheckSquare className="h-3 w-3 mr-1" />
+                {copyTargetDays.length === DAYS.filter(d => d !== filterDay).length ? "Deselect All" : "Select All"}
+              </Button>
+            </div>
+            {DAYS.filter(d => d !== filterDay).map(day => (
+              <label key={day} className="flex items-center gap-3 p-2 rounded-md hover:bg-accent/50 cursor-pointer">
+                <Checkbox
+                  checked={copyTargetDays.includes(day)}
+                  onCheckedChange={() => toggleCopyDay(day)}
+                />
+                <span className="text-sm">{day}</span>
+              </label>
+            ))}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowCopyDialog(false)}>Cancel</Button>
+            <Button onClick={handleBulkCopy} disabled={copying || copyTargetDays.length === 0} className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              {copying ? "Copying..." : `Copy to ${copyTargetDays.length} Day(s)`}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

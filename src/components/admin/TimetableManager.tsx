@@ -144,10 +144,12 @@ const TimetableManager = () => {
 
     setForm({ ...emptyEntry, class: filterClass, section: filterSection, day_of_week: filterDay });
     setShowForm(false);
-    loadEntries();
+    if (viewMode === "weekly") loadWeeklyEntries(); else loadEntries();
   };
 
   const startEdit = (entry: any) => {
+    setFilterDay(entry.day_of_week);
+    setViewMode("daily");
     setForm({
       class: entry.class,
       section: entry.section || "A",

@@ -61,7 +61,7 @@ const Admin = () => {
     setAnnouncements(ann.data || []);
   };
 
-  const updateAdmissionStatus = async (id: string, status: string) => {
+  const updateAdmissionStatus = async (id: string, status: "pending" | "under_review" | "approved" | "rejected" | "enrolled") => {
     await supabase.from("admissions").update({ status }).eq("id", id);
     toast({ title: `Admission ${status}` });
     loadAllData();

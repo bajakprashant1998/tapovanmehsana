@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/tis-logo.png";
@@ -70,16 +70,16 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
+          <Link to="/portal">
+            <Button variant="outline" className={`hidden md:inline-flex font-semibold ${scrolled || location.pathname !== "/" ? "border-primary/30 text-primary hover:bg-primary/10" : "border-white/30 text-white hover:bg-white/10"}`}>
+              <LogIn className="h-4 w-4 mr-1" /> Portal
+            </Button>
+          </Link>
           <Link to="/admissions">
             <Button className="hidden md:inline-flex bg-primary hover:bg-saffron-dark text-primary-foreground font-semibold shadow-lg">
               Apply Now
             </Button>
           </Link>
-          <a href="tel:+919876543210" className="hidden md:inline-flex">
-            <Button variant="outline" size="icon" className="border-primary/30 text-primary hover:bg-primary/10">
-              <Phone className="h-4 w-4" />
-            </Button>
-          </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden p-2 rounded-md hover:bg-muted"

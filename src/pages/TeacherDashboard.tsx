@@ -11,11 +11,11 @@ import { useToast } from "@/hooks/use-toast";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import {
   Users, ClipboardCheck, BookOpen, LogOut, ArrowLeft,
-  CheckCircle, XCircle, Clock, Plus, Calendar, Search
+  CheckCircle, XCircle, Clock, Plus, Calendar, Search, GraduationCap, Trash2
 } from "lucide-react";
 import logo from "@/assets/tis-logo.png";
 
-type Tab = "attendance" | "homework" | "students";
+type Tab = "attendance" | "homework" | "students" | "results";
 
 const TeacherDashboard = () => {
   const { user, loading, hasRole, signOut } = useAuth();

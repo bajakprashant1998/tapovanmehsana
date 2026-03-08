@@ -38,6 +38,18 @@ const TeacherDashboard = () => {
   });
   const [savingHw, setSavingHw] = useState(false);
 
+  // Exam Results
+  const [resultStudents, setResultStudents] = useState<any[]>([]);
+  const [resultClass, setResultClass] = useState("");
+  const [resultSection, setResultSection] = useState("A");
+  const [examName, setExamName] = useState("");
+  const [resultSubject, setResultSubject] = useState("");
+  const [academicYear, setAcademicYear] = useState("2026-27");
+  const [totalMarks, setTotalMarks] = useState("100");
+  const [marksMap, setMarksMap] = useState<Record<string, { marks: string; grade: string }>>({});
+  const [savingResults, setSavingResults] = useState(false);
+  const [existingResults, setExistingResults] = useState<any[]>([]);
+
   // Available classes
   const classes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 

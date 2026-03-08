@@ -128,6 +128,7 @@ const Admin = () => {
     { id: "students", label: "Students", icon: Users },
     { id: "fees", label: "Fees", icon: CreditCard },
     { id: "announcements", label: "Announcements", icon: Bell },
+    { id: "timetable", label: "Timetable", icon: Calendar },
   ];
 
   return (

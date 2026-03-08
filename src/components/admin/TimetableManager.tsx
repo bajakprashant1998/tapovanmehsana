@@ -294,22 +294,24 @@ const TimetableManager = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-1">
-          <Label className="text-xs">Day</Label>
-          <div className="flex gap-1">
-            {DAYS.map(d => (
-              <Button
-                key={d}
-                size="sm"
-                variant={filterDay === d ? "default" : "outline"}
-                onClick={() => setFilterDay(d)}
-                className="text-xs px-2"
-              >
-                {d.slice(0, 3)}
-              </Button>
-            ))}
+        {viewMode === "daily" && (
+          <div className="space-y-1">
+            <Label className="text-xs">Day</Label>
+            <div className="flex gap-1">
+              {DAYS.map(d => (
+                <Button
+                  key={d}
+                  size="sm"
+                  variant={filterDay === d ? "default" : "outline"}
+                  onClick={() => setFilterDay(d)}
+                  className="text-xs px-2"
+                >
+                  {d.slice(0, 3)}
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Add/Edit Form */}

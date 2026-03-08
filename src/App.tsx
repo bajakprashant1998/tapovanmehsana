@@ -24,6 +24,7 @@ import Events from "./pages/Events";
 import Alumni from "./pages/Alumni";
 import MandatoryDisclosure from "./pages/MandatoryDisclosure";
 import Results from "./pages/Results";
+import TeacherDashboard from "./pages/TeacherDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

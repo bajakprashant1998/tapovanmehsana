@@ -365,49 +365,126 @@ const TimetableManager = () => {
         </Card>
       )}
 
-      {/* Schedule Display */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            Class {filterClass}-{filterSection} — {filterDay}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {entries.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No periods scheduled. Click "Add Period" to create one.</p>
-          ) : (
-            <div className="divide-y divide-border">
-              {entries.map((entry) => (
-                <div key={entry.id} className="py-3 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <span className="font-display font-bold text-primary text-sm">{entry.period_number}</span>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">{entry.subject}</p>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" />
-                        <span>{entry.start_time} – {entry.end_time}</span>
-                        {entry.teacher_name && <span>• {entry.teacher_name}</span>}
-                        {entry.room && <span>• {entry.room}</span>}
+      {/* Daily Schedule Display */}
+      {viewMode === "daily" && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              Class {filterClass}-{filterSection} — {filterDay}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {entries.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No periods scheduled. Click "Add Period" to create one.</p>
+            ) : (
+              <div className="divide-y divide-border">
+                {entries.map((entry) => (
+                  <div key={entry.id} className="py-3 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <span className="font-display font-bold text-primary text-sm">{entry.period_number}</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">{entry.subject}</p>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Clock className="h-3 w-3" />
+                          <span>{entry.start_time} – {entry.end_time}</span>
+                          {entry.teacher_name && <span>• {entry.teacher_name}</span>}
+                          {entry.room && <span>• {entry.room}</span>}
+                        </div>
                       </div>
                     </div>
+                    <div className="flex gap-1 shrink-0">
+                      <Button variant="ghost" size="icon" onClick={() => startEdit(entry)} className="text-muted-foreground hover:text-foreground">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => deleteEntry(entry.id)} className="text-destructive hover:bg-destructive/10">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" onClick={() => startEdit(entry)} className="text-muted-foreground hover:text-foreground">
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => deleteEntry(entry.id)} className="text-destructive hover:bg-destructive/10">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Weekly Grid View */}
+      {viewMode === "weekly" && (() => {
+        const periodNumbers = [...new Set(weeklyEntries.map(e => e.period_number))].sort((a, b) => a - b);
+        const getEntry = (day: string, period: number) => weeklyEntries.find(e => e.day_of_week === day && e.period_number === period);
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Grid3X3 className="h-4 w-4" />
+                Class {filterClass}-{filterSection} — Weekly Overview
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              {periodNumbers.length === 0 ? (
+                <p className="text-sm text-muted-foreground p-6">No periods scheduled for this class/section.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border bg-muted/50">
+                        <th className="text-left p-3 font-semibold text-muted-foreground whitespace-nowrap w-20">Period</th>
+                        {DAYS.map(day => (
+                          <th key={day} className="text-left p-3 font-semibold text-muted-foreground whitespace-nowrap min-w-[140px]">{day}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {periodNumbers.map(period => {
+                        const sampleEntry = weeklyEntries.find(e => e.period_number === period);
+                        return (
+                          <tr key={period} className="border-b border-border last:border-0 hover:bg-muted/30">
+                            <td className="p-3 align-top">
+                              <div className="font-display font-bold text-primary text-sm">P{period}</div>
+                              {sampleEntry && (
+                                <div className="text-[10px] text-muted-foreground mt-0.5">
+                                  {sampleEntry.start_time?.slice(0, 5)}–{sampleEntry.end_time?.slice(0, 5)}
+                                </div>
+                              )}
+                            </td>
+                            {DAYS.map(day => {
+                              const entry = getEntry(day, period);
+                              return (
+                                <td key={day} className="p-2 align-top">
+                                  {entry ? (
+                                    <div
+                                      className="rounded-md bg-primary/5 border border-primary/10 p-2 cursor-pointer hover:bg-primary/10 transition-colors group"
+                                      onClick={() => startEdit(entry)}
+                                    >
+                                      <p className="font-medium text-foreground text-xs">{entry.subject}</p>
+                                      {entry.teacher_name && <p className="text-[10px] text-muted-foreground mt-0.5">{entry.teacher_name}</p>}
+                                      {entry.room && <p className="text-[10px] text-muted-foreground">{entry.room}</p>}
+                                      <div className="flex gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Button variant="ghost" size="icon" className="h-5 w-5 text-destructive hover:bg-destructive/10" onClick={(e) => { e.stopPropagation(); deleteEntry(entry.id); }}>
+                                          <Trash2 className="h-3 w-3" />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className="rounded-md border border-dashed border-border p-2 text-center text-[10px] text-muted-foreground">—</div>
+                                  )}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+              )}
+            </CardContent>
+          </Card>
+        );
+      })()}
 
       {/* Bulk Copy Dialog */}
       <Dialog open={showCopyDialog} onOpenChange={setShowCopyDialog}>

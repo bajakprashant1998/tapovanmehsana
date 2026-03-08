@@ -310,6 +310,7 @@ const TeacherDashboard = () => {
   const tabs: { id: Tab; label: string; icon: any }[] = [
     { id: "attendance", label: "Mark Attendance", icon: ClipboardCheck },
     { id: "homework", label: "Homework", icon: BookOpen },
+    { id: "results", label: "Exam Results", icon: GraduationCap },
     { id: "students", label: "View Students", icon: Users },
   ];
 

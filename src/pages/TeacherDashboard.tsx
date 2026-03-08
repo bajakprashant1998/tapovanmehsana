@@ -293,6 +293,33 @@ const TeacherDashboard = () => {
     loadHomework();
   };
 
+  // Timetable
+  const [timetable, setTimetable] = useState<any[]>([]);
+  const [ttClass, setTtClass] = useState("");
+  const [ttSection, setTtSection] = useState("A");
+  const [ttDay, setTtDay] = useState(() => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return days[new Date().getDay()];
+  });
+
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  const loadTimetable = async () => {
+    if (!ttClass) return;
+    const { data } = await supabase
+      .from("timetable")
+      .select("*")
+      .eq("class", ttClass)
+      .eq("section", ttSection)
+      .eq("day_of_week", ttDay)
+      .order("period_number");
+    setTimetable(data || []);
+  };
+
+  useEffect(() => {
+    if (ttClass && ttDay) loadTimetable();
+  }, [ttClass, ttSection, ttDay]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted">

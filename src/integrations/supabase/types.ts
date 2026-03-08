@@ -422,6 +422,51 @@ export type Database = {
           },
         ]
       }
+      timetable: {
+        Row: {
+          class: string
+          created_at: string
+          day_of_week: string
+          end_time: string
+          id: string
+          period_number: number
+          room: string | null
+          section: string | null
+          start_time: string
+          subject: string
+          teacher_name: string | null
+          teacher_user_id: string | null
+        }
+        Insert: {
+          class: string
+          created_at?: string
+          day_of_week: string
+          end_time: string
+          id?: string
+          period_number: number
+          room?: string | null
+          section?: string | null
+          start_time: string
+          subject: string
+          teacher_name?: string | null
+          teacher_user_id?: string | null
+        }
+        Update: {
+          class?: string
+          created_at?: string
+          day_of_week?: string
+          end_time?: string
+          id?: string
+          period_number?: number
+          room?: string | null
+          section?: string | null
+          start_time?: string
+          subject?: string
+          teacher_name?: string | null
+          teacher_user_id?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

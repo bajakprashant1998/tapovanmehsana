@@ -247,6 +247,24 @@ const TimetableManager = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 className="font-display text-2xl font-extrabold text-foreground">Timetable Management</h2>
         <div className="flex gap-2">
+          <div className="flex border border-border rounded-md overflow-hidden">
+            <Button
+              size="sm"
+              variant={viewMode === "daily" ? "default" : "ghost"}
+              onClick={() => setViewMode("daily")}
+              className="rounded-none text-xs"
+            >
+              <List className="h-4 w-4 mr-1" /> Daily
+            </Button>
+            <Button
+              size="sm"
+              variant={viewMode === "weekly" ? "default" : "ghost"}
+              onClick={() => setViewMode("weekly")}
+              className="rounded-none text-xs"
+            >
+              <Grid3X3 className="h-4 w-4 mr-1" /> Weekly
+            </Button>
+          </div>
           <Button onClick={openCopyDialog} variant="outline" disabled={entries.length === 0}>
             <Copy className="h-4 w-4 mr-1" /> Copy to Days
           </Button>

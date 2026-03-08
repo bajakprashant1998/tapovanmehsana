@@ -55,6 +55,7 @@ const emptyEntry: TimetableEntry = {
 const TimetableManager = () => {
   const { toast } = useToast();
   const [entries, setEntries] = useState<any[]>([]);
+  const [weeklyEntries, setWeeklyEntries] = useState<any[]>([]);
   const [filterClass, setFilterClass] = useState("1");
   const [filterSection, setFilterSection] = useState("A");
   const [filterDay, setFilterDay] = useState("Monday");
@@ -64,10 +65,15 @@ const TimetableManager = () => {
   const [showCopyDialog, setShowCopyDialog] = useState(false);
   const [copyTargetDays, setCopyTargetDays] = useState<string[]>([]);
   const [copying, setCopying] = useState(false);
+  const [viewMode, setViewMode] = useState<"daily" | "weekly">("daily");
 
   useEffect(() => {
-    loadEntries();
-  }, [filterClass, filterSection, filterDay]);
+    if (viewMode === "daily") {
+      loadEntries();
+    } else {
+      loadWeeklyEntries();
+    }
+  }, [filterClass, filterSection, filterDay, viewMode]);
 
   const loadEntries = async () => {
     const { data } = await supabase
@@ -78,6 +84,18 @@ const TimetableManager = () => {
       .eq("day_of_week", filterDay)
       .order("period_number", { ascending: true });
     setEntries(data || []);
+  };
+
+  const loadWeeklyEntries = async () => {
+    const { data } = await supabase
+      .from("timetable")
+      .select("*")
+      .eq("class", filterClass)
+      .eq("section", filterSection)
+      .order("period_number", { ascending: true });
+    setWeeklyEntries(data || []);
+    // Also keep daily entries in sync
+    setEntries((data || []).filter(e => e.day_of_week === filterDay));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -13,7 +13,8 @@ const navItems = [
   { label: "Admissions", path: "/admissions" },
   { label: "Residential Life", path: "/residential-life" },
   { label: "Gallery", path: "/gallery" },
-  { label: "Careers", path: "/careers" },
+  { label: "Results", path: "/results" },
+  { label: "Events", path: "/events" },
   { label: "Contact", path: "/contact" },
 ];
 

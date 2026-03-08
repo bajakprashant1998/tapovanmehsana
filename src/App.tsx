@@ -24,6 +24,7 @@ import Events from "./pages/Events";
 import Alumni from "./pages/Alumni";
 import MandatoryDisclosure from "./pages/MandatoryDisclosure";
 import Results from "./pages/Results";
+import TeacherDashboard from "./pages/TeacherDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/portal" element={<Portal />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/teacher" element={<TeacherDashboard />} />
 
             {/* Public pages with layout */}
             <Route path="/" element={<Layout><Index /></Layout>} />

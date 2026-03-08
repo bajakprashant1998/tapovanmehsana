@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/tis-logo.png";
 
-type Tab = "attendance" | "homework" | "students" | "results";
+type Tab = "attendance" | "homework" | "students" | "results" | "timetable";
 
 const TeacherDashboard = () => {
   const { user, loading, hasRole, signOut } = useAuth();

@@ -11,11 +11,17 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Users, FileText, CreditCard, BarChart3, Bell, LogOut,
   GraduationCap, Plus, Trash2, Edit, CheckCircle, XCircle, Clock,
-  ArrowLeft
+  ArrowLeft, Calendar, Save
 } from "lucide-react";
-import logo from "@/assets/tis-logo.png";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-type Tab = "overview" | "admissions" | "students" | "fees" | "announcements";
+type Tab = "overview" | "admissions" | "students" | "fees" | "announcements" | "timetable";
 
 const Admin = () => {
   const { user, loading, hasRole, signOut } = useAuth();

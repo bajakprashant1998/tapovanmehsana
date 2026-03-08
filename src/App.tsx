@@ -14,6 +14,10 @@ import Gallery from "./pages/Gallery";
 import Portal from "./pages/Portal";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
+import Events from "./pages/Events";
+import Alumni from "./pages/Alumni";
+import MandatoryDisclosure from "./pages/MandatoryDisclosure";
+import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +40,10 @@ const App = () => (
             <Route path="/portal" element={<Portal />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/alumni" element={<Alumni />} />
+            <Route path="/mandatory-disclosure" element={<MandatoryDisclosure />} />
+            <Route path="/results" element={<Results />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

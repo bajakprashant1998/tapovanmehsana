@@ -43,7 +43,11 @@ const Footer = () => {
                 { label: "Admissions", path: "/admissions" },
                 { label: "Facilities", path: "/facilities" },
                 { label: "Gallery", path: "/gallery" },
+                { label: "Results", path: "/results" },
+                { label: "Events", path: "/events" },
+                { label: "Alumni", path: "/alumni" },
                 { label: "Careers", path: "/careers" },
+                { label: "Disclosure", path: "/mandatory-disclosure" },
               ].map((link) => (
                 <li key={link.path}>
                   <Link

@@ -168,7 +168,7 @@ const TimetableManager = () => {
   const deleteEntry = async (id: string) => {
     await supabase.from("timetable").delete().eq("id", id);
     toast({ title: "Period deleted" });
-    loadEntries();
+    if (viewMode === "weekly") loadWeeklyEntries(); else loadEntries();
   };
 
   const openNewForm = () => {

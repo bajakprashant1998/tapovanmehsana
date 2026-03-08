@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/tis-logo.png";
 
-type Tab = "attendance" | "homework" | "students" | "results";
+type Tab = "attendance" | "homework" | "students" | "results" | "timetable";
 
 const TeacherDashboard = () => {
   const { user, loading, hasRole, signOut } = useAuth();
@@ -293,6 +293,33 @@ const TeacherDashboard = () => {
     loadHomework();
   };
 
+  // Timetable
+  const [timetable, setTimetable] = useState<any[]>([]);
+  const [ttClass, setTtClass] = useState("");
+  const [ttSection, setTtSection] = useState("A");
+  const [ttDay, setTtDay] = useState(() => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return days[new Date().getDay()];
+  });
+
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  const loadTimetable = async () => {
+    if (!ttClass) return;
+    const { data } = await supabase
+      .from("timetable")
+      .select("*")
+      .eq("class", ttClass)
+      .eq("section", ttSection)
+      .eq("day_of_week", ttDay)
+      .order("period_number");
+    setTimetable(data || []);
+  };
+
+  useEffect(() => {
+    if (ttClass && ttDay) loadTimetable();
+  }, [ttClass, ttSection, ttDay]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted">
@@ -311,6 +338,7 @@ const TeacherDashboard = () => {
     { id: "attendance", label: "Mark Attendance", icon: ClipboardCheck },
     { id: "homework", label: "Homework", icon: BookOpen },
     { id: "results", label: "Exam Results", icon: GraduationCap },
+    { id: "timetable", label: "Timetable", icon: Calendar },
     { id: "students", label: "View Students", icon: Users },
   ];
 
@@ -767,6 +795,142 @@ const TeacherDashboard = () => {
               <Card>
                 <CardContent className="p-8 text-center text-muted-foreground">
                   Enter exam name and subject to start entering marks.
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
+
+        {/* TIMETABLE TAB */}
+        {tab === "timetable" && (
+          <div className="space-y-6">
+            <AnimatedSection>
+              <h2 className="font-display text-2xl font-extrabold text-foreground">Class Timetable</h2>
+            </AnimatedSection>
+
+            <Card>
+              <CardContent className="p-5">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Class</Label>
+                    <select
+                      value={ttClass}
+                      onChange={(e) => setTtClass(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="">Select Class</option>
+                      {classes.map((c) => (
+                        <option key={c} value={c}>Class {c}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Section</Label>
+                    <select
+                      value={ttSection}
+                      onChange={(e) => setTtSection(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      {["A", "B", "C", "D"].map((s) => (
+                        <option key={s} value={s}>Section {s}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Day</Label>
+                    <select
+                      value={ttDay}
+                      onChange={(e) => setTtDay(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      {daysOfWeek.map((d) => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Day tabs */}
+            {ttClass && (
+              <div className="flex gap-1 overflow-x-auto pb-2">
+                {daysOfWeek.map((d) => (
+                  <button
+                    key={d}
+                    onClick={() => setTtDay(d)}
+                    className={`px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors ${
+                      ttDay === d
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-muted-foreground hover:text-foreground border border-border"
+                    }`}
+                  >
+                    {d.substring(0, 3)}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {ttClass && timetable.length > 0 && (
+              <AnimatedSection delay={0.1}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Calendar className="h-5 w-5" />
+                      {ttDay} — Class {ttClass}-{ttSection}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {timetable.map((period) => (
+                        <div
+                          key={period.id}
+                          className="flex items-center gap-4 p-4 rounded-lg border border-border bg-card hover:bg-accent/50 transition-colors"
+                        >
+                          <div className="flex flex-col items-center justify-center w-14 h-14 rounded-lg bg-primary/10 text-primary shrink-0">
+                            <span className="text-xs font-medium">Period</span>
+                            <span className="text-lg font-bold">{period.period_number}</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-foreground">{period.subject}</p>
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mt-1">
+                              <span className="flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {period.start_time?.substring(0, 5)} – {period.end_time?.substring(0, 5)}
+                              </span>
+                              {period.teacher_name && (
+                                <span className="flex items-center gap-1">
+                                  <Users className="h-3 w-3" />
+                                  {period.teacher_name}
+                                </span>
+                              )}
+                              {period.room && (
+                                <span>Room: {period.room}</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+            )}
+
+            {ttClass && timetable.length === 0 && (
+              <Card>
+                <CardContent className="p-8 text-center text-muted-foreground">
+                  <Calendar className="h-10 w-10 mx-auto mb-3 opacity-40" />
+                  <p>No timetable entries for {ttDay} — Class {ttClass}-{ttSection}.</p>
+                  <p className="text-xs mt-1">Timetable can be configured by the admin.</p>
+                </CardContent>
+              </Card>
+            )}
+
+            {!ttClass && (
+              <Card>
+                <CardContent className="p-8 text-center text-muted-foreground">
+                  Select a class to view the timetable.
                 </CardContent>
               </Card>
             )}

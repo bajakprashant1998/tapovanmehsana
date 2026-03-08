@@ -11,11 +11,20 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Users, FileText, CreditCard, BarChart3, Bell, LogOut,
   GraduationCap, Plus, Trash2, Edit, CheckCircle, XCircle, Clock,
-  ArrowLeft
+  ArrowLeft, Calendar, Save
 } from "lucide-react";
-import logo from "@/assets/tis-logo.png";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-type Tab = "overview" | "admissions" | "students" | "fees" | "announcements";
+import logo from "@/assets/tis-logo.png";
+import TimetableManager from "@/components/admin/TimetableManager";
+
+type Tab = "overview" | "admissions" | "students" | "fees" | "announcements" | "timetable";
 
 const Admin = () => {
   const { user, loading, hasRole, signOut } = useAuth();
@@ -119,6 +128,7 @@ const Admin = () => {
     { id: "students", label: "Students", icon: Users },
     { id: "fees", label: "Fees", icon: CreditCard },
     { id: "announcements", label: "Announcements", icon: Bell },
+    { id: "timetable", label: "Timetable", icon: Calendar },
   ];
 
   return (
@@ -460,6 +470,9 @@ const Admin = () => {
             </div>
           </div>
         )}
+
+        {/* Timetable */}
+        {tab === "timetable" && <TimetableManager />}
       </div>
     </div>
   );

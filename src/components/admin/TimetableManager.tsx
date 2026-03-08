@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Edit, Save, X, Calendar, Clock, Copy, CheckSquare } from "lucide-react";
+import { Plus, Trash2, Edit, Save, X, Calendar, Clock, Copy, CheckSquare, Grid3X3, List } from "lucide-react";
 import {
   Select,
   SelectContent,

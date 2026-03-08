@@ -113,6 +113,117 @@ const TeacherDashboard = () => {
     setHomeworkList(data || []);
   };
 
+  // Exam Results
+  const loadResultStudents = async () => {
+    if (!resultClass) return;
+    let query = supabase.from("students").select("*").eq("class", resultClass).eq("is_active", true);
+    if (resultSection) query = query.eq("section", resultSection);
+    const { data } = await query.order("full_name");
+    setResultStudents(data || []);
+    const map: Record<string, { marks: string; grade: string }> = {};
+    (data || []).forEach((s) => { map[s.id] = { marks: "", grade: "" }; });
+    setMarksMap(map);
+  };
+
+  useEffect(() => {
+    if (resultClass) loadResultStudents();
+  }, [resultClass, resultSection]);
+
+  const loadExistingResults = async () => {
+    if (!resultStudents.length || !examName || !resultSubject) return;
+    const ids = resultStudents.map((s) => s.id);
+    const { data } = await supabase
+      .from("exam_results")
+      .select("*")
+      .in("student_id", ids)
+      .eq("exam_name", examName)
+      .eq("subject", resultSubject)
+      .eq("academic_year", academicYear);
+    setExistingResults(data || []);
+    if (data && data.length > 0) {
+      const map: Record<string, { marks: string; grade: string }> = {};
+      resultStudents.forEach((s) => { map[s.id] = { marks: "", grade: "" }; });
+      data.forEach((r) => {
+        map[r.student_id] = {
+          marks: r.marks_obtained?.toString() || "",
+          grade: r.grade || "",
+        };
+      });
+      setMarksMap(map);
+    }
+  };
+
+  useEffect(() => {
+    if (resultStudents.length > 0 && examName && resultSubject) {
+      loadExistingResults();
+    }
+  }, [resultStudents, examName, resultSubject, academicYear]);
+
+  const autoGrade = (marks: number, total: number): string => {
+    const pct = (marks / total) * 100;
+    if (pct >= 90) return "A+";
+    if (pct >= 80) return "A";
+    if (pct >= 70) return "B+";
+    if (pct >= 60) return "B";
+    if (pct >= 50) return "C";
+    if (pct >= 40) return "D";
+    return "F";
+  };
+
+  const updateMarks = (studentId: string, marks: string) => {
+    const numMarks = parseFloat(marks);
+    const numTotal = parseFloat(totalMarks) || 100;
+    const grade = !isNaN(numMarks) ? autoGrade(numMarks, numTotal) : "";
+    setMarksMap((prev) => ({ ...prev, [studentId]: { marks, grade } }));
+  };
+
+  const saveResults = async () => {
+    if (!examName || !resultSubject || !resultClass) {
+      toast({ title: "Fill exam name, subject, and class", variant: "destructive" });
+      return;
+    }
+    setSavingResults(true);
+    try {
+      const ids = resultStudents.map((s) => s.id);
+      // Delete existing results for this exam/subject combo
+      await supabase
+        .from("exam_results")
+        .delete()
+        .in("student_id", ids)
+        .eq("exam_name", examName)
+        .eq("subject", resultSubject)
+        .eq("academic_year", academicYear);
+
+      // Insert new results (only for students with marks entered)
+      const records = resultStudents
+        .filter((s) => marksMap[s.id]?.marks !== "")
+        .map((s) => ({
+          student_id: s.id,
+          exam_name: examName,
+          subject: resultSubject,
+          academic_year: academicYear,
+          marks_obtained: parseFloat(marksMap[s.id].marks),
+          total_marks: parseFloat(totalMarks) || 100,
+          grade: marksMap[s.id].grade,
+        }));
+
+      if (records.length === 0) {
+        toast({ title: "Enter marks for at least one student", variant: "destructive" });
+        setSavingResults(false);
+        return;
+      }
+
+      const { error } = await supabase.from("exam_results").insert(records);
+      if (error) throw error;
+      toast({ title: `Results saved for ${records.length} students!` });
+      loadExistingResults();
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } finally {
+      setSavingResults(false);
+    }
+  };
+
   const toggleAttendance = (studentId: string) => {
     setAttendanceMap((prev) => ({
       ...prev,

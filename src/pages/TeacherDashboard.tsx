@@ -613,6 +613,166 @@ const TeacherDashboard = () => {
           </div>
         )}
 
+        {/* EXAM RESULTS TAB */}
+        {tab === "results" && (
+          <div className="space-y-6">
+            <AnimatedSection>
+              <h2 className="font-display text-2xl font-extrabold text-foreground">Enter Exam Results</h2>
+            </AnimatedSection>
+
+            <Card>
+              <CardContent className="p-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label>Class *</Label>
+                    <select
+                      value={resultClass}
+                      onChange={(e) => setResultClass(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="">Select Class</option>
+                      {classes.map((c) => (
+                        <option key={c} value={c}>Class {c}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Section</Label>
+                    <select
+                      value={resultSection}
+                      onChange={(e) => setResultSection(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      {["A", "B", "C", "D"].map((s) => (
+                        <option key={s} value={s}>Section {s}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Exam Name *</Label>
+                    <Input
+                      value={examName}
+                      onChange={(e) => setExamName(e.target.value)}
+                      placeholder="e.g. Unit Test 1, Mid Term"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Subject *</Label>
+                    <Input
+                      value={resultSubject}
+                      onChange={(e) => setResultSubject(e.target.value)}
+                      placeholder="e.g. Mathematics"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Total Marks</Label>
+                    <Input
+                      type="number"
+                      value={totalMarks}
+                      onChange={(e) => setTotalMarks(e.target.value)}
+                      placeholder="100"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Academic Year</Label>
+                    <Input
+                      value={academicYear}
+                      onChange={(e) => setAcademicYear(e.target.value)}
+                      placeholder="2026-27"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {resultClass && resultStudents.length > 0 && examName && resultSubject && (
+              <AnimatedSection delay={0.1}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">
+                      {examName} — {resultSubject} • Class {resultClass}-{resultSection}
+                      {existingResults.length > 0 && (
+                        <span className="ml-2 text-xs font-normal text-primary bg-primary/10 px-2 py-1 rounded-full">
+                          Existing results loaded — editing
+                        </span>
+                      )}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 mb-6">
+                      <div className="grid grid-cols-12 gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        <div className="col-span-1">#</div>
+                        <div className="col-span-5">Student</div>
+                        <div className="col-span-3">Marks (/{totalMarks})</div>
+                        <div className="col-span-3">Grade</div>
+                      </div>
+                      {resultStudents.map((s, i) => (
+                        <div key={s.id} className="grid grid-cols-12 gap-2 items-center p-3 rounded-lg border border-border bg-card">
+                          <div className="col-span-1 text-sm font-medium text-muted-foreground">{i + 1}.</div>
+                          <div className="col-span-5">
+                            <p className="text-sm font-medium text-foreground">{s.full_name}</p>
+                            <p className="text-xs text-muted-foreground">Roll #{s.roll_number || "—"}</p>
+                          </div>
+                          <div className="col-span-3">
+                            <Input
+                              type="number"
+                              min="0"
+                              max={totalMarks}
+                              value={marksMap[s.id]?.marks || ""}
+                              onChange={(e) => updateMarks(s.id, e.target.value)}
+                              placeholder="0"
+                              className="h-9"
+                            />
+                          </div>
+                          <div className="col-span-3">
+                            <span className={`inline-block px-3 py-1.5 rounded-md text-sm font-semibold ${
+                              marksMap[s.id]?.grade === "A+" || marksMap[s.id]?.grade === "A"
+                                ? "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400"
+                                : marksMap[s.id]?.grade === "B+" || marksMap[s.id]?.grade === "B"
+                                ? "bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400"
+                                : marksMap[s.id]?.grade === "C"
+                                ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-950/30 dark:text-yellow-400"
+                                : marksMap[s.id]?.grade === "F"
+                                ? "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400"
+                                : "bg-muted text-muted-foreground"
+                            }`}>
+                              {marksMap[s.id]?.grade || "—"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <Button
+                      onClick={saveResults}
+                      disabled={savingResults}
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                    >
+                      <GraduationCap className="h-4 w-4 mr-2" />
+                      {savingResults ? "Saving..." : existingResults.length > 0 ? "Update Results" : "Save Results"}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+            )}
+
+            {resultClass && resultStudents.length === 0 && (
+              <Card>
+                <CardContent className="p-8 text-center text-muted-foreground">
+                  No students found in Class {resultClass}-{resultSection}.
+                </CardContent>
+              </Card>
+            )}
+
+            {resultClass && (!examName || !resultSubject) && resultStudents.length > 0 && (
+              <Card>
+                <CardContent className="p-8 text-center text-muted-foreground">
+                  Enter exam name and subject to start entering marks.
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
+
         {/* STUDENTS TAB */}
         {tab === "students" && (
           <div className="space-y-6">

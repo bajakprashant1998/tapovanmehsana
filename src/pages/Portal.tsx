@@ -95,7 +95,14 @@ const Portal = () => {
             <span className="font-display font-bold text-lg hidden sm:block">Portal</span>
           </Link>
           <div className="flex items-center gap-4">
-            {(isAdmin || isTeacher) && (
+            {isTeacher && (
+              <Link to="/teacher">
+                <Button variant="outline" size="sm" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10">
+                  Teacher Dashboard
+                </Button>
+              </Link>
+            )}
+            {isAdmin && (
               <Link to="/admin">
                 <Button variant="outline" size="sm" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10">
                   Admin Panel

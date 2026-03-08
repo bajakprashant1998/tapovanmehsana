@@ -44,6 +44,7 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/portal" element={<Portal />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/teacher" element={<TeacherDashboard />} />
 
             {/* Public pages with layout */}
             <Route path="/" element={<Layout><Index /></Layout>} />
